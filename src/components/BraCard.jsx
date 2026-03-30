@@ -1,7 +1,10 @@
+import { useState } from 'react';
+
+const S3_BASE = import.meta.env.VITE_S3_BASE_URL;
+
 function parseFittingNotes(text) {
   if (!text) return [];
 
-  // Find all subheadings (ALL CAPS words followed by colon) and their positions
   const headingRegex = /([A-Z]{2,}(?:\s[A-Z]{2,})*)\s*:/g;
   const matches = [];
   let m;
@@ -9,7 +12,6 @@ function parseFittingNotes(text) {
     matches.push({ heading: m[1].trim(), index: m.index, end: m.index + m[0].length });
   }
 
-  // Extract content between headings; skip duplicate headings (keep first only)
   const seen = new Set();
   const sections = [];
   for (let i = 0; i < matches.length; i++) {
@@ -26,15 +28,29 @@ function parseFittingNotes(text) {
 
 export default function BraCard({ entry, rank }) {
   const fittingSections = parseFittingNotes(entry.fitting_notes);
+  const [imgError, setImgError] = useState(false);
+
+  const imageUrl =
+    S3_BASE && entry.image_key && !imgError
+      ? `${S3_BASE}/${entry.image_key}`
+      : null;
 
   return (
     <div className="bra-card">
       <div className="card-rank">#{rank}</div>
 
-      {/* Image placeholder – AWS hook */}
-      <div className="card-image-placeholder">
-        <span className="placeholder-label">Style {entry.style}</span>
-      </div>
+      {imageUrl ? (
+        <img
+          className="card-image"
+          src={imageUrl}
+          alt={`${entry.style_name} – Style ${entry.style}`}
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <div className="card-image-placeholder">
+          <span className="placeholder-label">Style {entry.style}</span>
+        </div>
+      )}
 
       <div className="card-body">
         <p className="card-style-num">Style {entry.style}</p>
