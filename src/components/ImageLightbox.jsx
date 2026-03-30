@@ -23,7 +23,6 @@ export default function ImageLightbox({ images, currentIndex, onNavigate, onClos
   }, [prev, next, onClose]);
 
   const src = `${S3_BASE}/${images[currentIndex]}`;
-  const viewLabel = images[currentIndex].replace(/^intimo-\d+-/, '').replace(/\.[^.]+$/, '');
 
   return (
     <div className="lightbox-overlay" onClick={onClose}>
@@ -32,12 +31,11 @@ export default function ImageLightbox({ images, currentIndex, onNavigate, onClos
 
         <div className="lightbox-image-wrap">
           <button className="lightbox-nav lightbox-prev" onClick={prev} aria-label="Previous">&#8249;</button>
-          <img className="lightbox-img" src={src} alt={`${styleName} — ${viewLabel}`} />
+          <img className="lightbox-img" src={src} alt={styleName} />
           <button className="lightbox-nav lightbox-next" onClick={next} aria-label="Next">&#8250;</button>
         </div>
 
         <div className="lightbox-footer">
-          <span className="lightbox-label">{viewLabel}</span>
           <span className="lightbox-counter">{currentIndex + 1} / {total}</span>
         </div>
 
