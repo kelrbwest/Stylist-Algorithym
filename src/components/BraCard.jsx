@@ -32,7 +32,7 @@ export default function BraCard({ entry, rank }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  const images = imageManifest[entry.style] || [];
+  const images = (imageManifest[entry.style] || []).slice(0, 7);
   const primaryImage = images[0];
   const heroUrl = S3_BASE && primaryImage && !imgError
     ? `${S3_BASE}/${primaryImage}`
