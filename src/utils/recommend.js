@@ -6,10 +6,10 @@ export const AGE_TO_TISSUE = { 25: 'Firm', 40: 'Medium', 55: 'Soft' };
 
 export function mapAge(age) {
   const n = parseInt(age, 10);
-  if (isNaN(n)) return null;
-  return AGE_GROUPS.reduce((prev, curr) =>
-    Math.abs(curr - n) < Math.abs(prev - n) ? curr : prev
-  );
+  if (isNaN(n) || n < 16 || n > 99) return null;
+  if (n < 35) return 25;   // Under 35
+  if (n < 50) return 40;   // 35–49
+  return 55;               // 50+
 }
 
 export const CAPSULES = [
