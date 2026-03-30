@@ -450,6 +450,11 @@ body {
   letter-spacing: 0.03em;
 }
 
+.card-notes summary::marker,
+.card-notes summary::-webkit-details-marker {
+  color: var(--accent-interact);
+}
+
 .fitting-sections {
   margin-top: 12px;
   display: flex;
