@@ -452,7 +452,11 @@ body {
 
 .card-notes summary::marker,
 .card-notes summary::-webkit-details-marker {
-  color: var(--accent-interact);
+  color: var(--accent-interact) !important;
+}
+
+details.card-notes summary {
+  color: var(--accent-interact) !important;
 }
 
 .fitting-sections {
