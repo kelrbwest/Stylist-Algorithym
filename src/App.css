@@ -1269,4 +1269,98 @@ details.card-notes summary {
 .card-image {
   transition: opacity 0.2s ease;
 }
+
+/* ── Studio Locator ── */
+.studio-locator {
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.studio-locator-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.studio-locator-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.studio-locator-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.studio-locator-widget {
+  width: 100%;
+  min-height: 500px;
+}
+
+/* Stockist widget overrides to match brand */
+#stockist-widget {
+  --stockist-feature-color: #121212 !important;
+  --stockist-feature-contrast-color: #fff !important;
+  width: 100% !important;
+  margin: 0 !important;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+#stockist-widget .stockist-search-field {
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  padding: 10px 12px !important;
+}
+
+#stockist-widget .stockist-search-field:focus {
+  border-color: var(--text) !important;
+  outline: none !important;
+}
+
+#stockist-widget .stockist-search-button {
+  background: var(--text) !important;
+  border: none !important;
+  border-radius: var(--radius) !important;
+}
+
+#stockist-widget .stockist-result-name {
+  font-weight: 700 !important;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+#stockist-widget .stockist-result-address {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 12px !important;
+}
+
+#stockist-widget .stockist-result-link {
+  color: var(--text) !important;
+  font-weight: 700 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+  letter-spacing: 0.06em !important;
+}
+
+#stockist-widget .stockist-geolocate-button {
+  border: 1.5px solid var(--text) !important;
+  color: var(--text) !important;
+  font-family: 'Montserrat', sans-serif !important;
+  border-radius: var(--radius) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+@media print {
+  .studio-locator { display: none; }
+}
 }

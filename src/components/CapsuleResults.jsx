@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import BraCard from './BraCard';
+import StudioLocator from './StudioLocator';
 import { CAPSULES, AGE_TO_TISSUE } from '../utils/recommend';
 
 const AGE_GROUP_LABELS = { 25: 'Under 35', 40: '35–49', 55: '50+' };
 
 export default function CapsuleResults({ recommendations, profile, onReset }) {
-  const { ageGroup, bandSize, cupSize, bodyFirmness } = profile;
+  const { ageGroup, bandSize, cupSize, bodyFirmness, postCode } = profile;
   const breastTissue = AGE_TO_TISSUE[ageGroup];
   const [viewMode, setViewMode] = useState('flatlay');
 
@@ -66,6 +67,9 @@ export default function CapsuleResults({ recommendations, profile, onReset }) {
           </section>
         );
       })}
+
+      {/* Studio Locator — auto-searches by customer's postcode */}
+      <StudioLocator postCode={postCode} />
     </div>
   );
 }

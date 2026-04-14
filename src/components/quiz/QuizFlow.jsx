@@ -37,10 +37,10 @@ export default function QuizFlow() {
 
   const handleTransitionDone = useCallback(() => {
     const recs = getRecommendations({ ageGroup, bodyFirmness });
-    setProfile({ ageGroup, bodyFirmness, bandSize, cupSize });
+    setProfile({ ageGroup, bodyFirmness, bandSize, cupSize, postCode: customerDetails.postCode });
     setResults(recs);
     setStep(STEPS.indexOf('results'));
-  }, [ageGroup, bodyFirmness, bandSize, cupSize]);
+  }, [ageGroup, bodyFirmness, bandSize, cupSize, customerDetails.postCode]);
 
   const handleReset = () => {
     setStep(0);
