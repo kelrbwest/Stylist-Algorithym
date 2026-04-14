@@ -1360,6 +1360,18 @@ details.card-notes summary {
   font-weight: 600 !important;
 }
 
+/* Hide the map — API key is restricted to intimo.com.au */
+#stockist-widget .stockist-map-container,
+#stockist-widget .stockist-map {
+  display: none !important;
+}
+
+#stockist-widget .stockist-list-container,
+#stockist-widget .stockist-side-panel {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 @media print {
   .studio-locator { display: none; }
 }
