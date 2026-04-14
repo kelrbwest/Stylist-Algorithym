@@ -8,10 +8,11 @@ import AgeStep from './AgeStep';
 import FirmnessStep from './FirmnessStep';
 import BandSizeStep from './BandSizeStep';
 import CupSizeStep from './CupSizeStep';
+import CustomerDetailsStep from './CustomerDetailsStep';
 import TransitionStep from './TransitionStep';
 
-const STEPS = ['welcome', 'age', 'firmness', 'band', 'cup', 'transition', 'results'];
-const TOTAL_QUESTIONS = 5; // welcome & transition don't count
+const STEPS = ['welcome', 'age', 'firmness', 'band', 'cup', 'details', 'transition', 'results'];
+const TOTAL_QUESTIONS = 5;
 
 export default function QuizFlow() {
   const navigate = useNavigate();
@@ -20,6 +21,14 @@ export default function QuizFlow() {
   const [bodyFirmness, setBodyFirmness] = useState(null);
   const [bandSize, setBandSize] = useState('');
   const [cupSize, setCupSize] = useState('');
+  const [customerDetails, setCustomerDetails] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    mobile: '',
+    postCode: '',
+    subscribe: false,
+  });
   const [results, setResults] = useState(null);
   const [profile, setProfile] = useState(null);
 
@@ -39,14 +48,14 @@ export default function QuizFlow() {
     setBodyFirmness(null);
     setBandSize('');
     setCupSize('');
+    setCustomerDetails({ firstName: '', lastName: '', email: '', mobile: '', postCode: '', subscribe: false });
     setResults(null);
     setProfile(null);
   };
 
   const currentStep = STEPS[step];
 
-  // Progress bar shows for question steps only (not welcome, transition, results)
-  const questionSteps = ['age', 'firmness', 'band', 'cup'];
+  const questionSteps = ['age', 'firmness', 'band', 'cup', 'details'];
   const questionIndex = questionSteps.indexOf(currentStep);
   const showProgress = questionIndex >= 0;
 
@@ -55,7 +64,7 @@ export default function QuizFlow() {
       <header className="app-header">
         <div className="header-inner">
           <span className="brand-name" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>INTIMO</span>
-          <span className="brand-tagline">Fit Journey</span>
+          <span className="brand-tagline">Lingerie Capsule</span>
         </div>
       </header>
 
@@ -96,6 +105,14 @@ export default function QuizFlow() {
           <CupSizeStep
             value={cupSize}
             onChange={setCupSize}
+            onNext={goNext}
+            onBack={goBack}
+          />
+        )}
+        {currentStep === 'details' && (
+          <CustomerDetailsStep
+            value={customerDetails}
+            onChange={setCustomerDetails}
             onNext={goNext}
             onBack={goBack}
           />

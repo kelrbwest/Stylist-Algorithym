@@ -26,17 +26,37 @@ function parseFittingNotes(text) {
   return sections;
 }
 
-export default function BraCard({ entry, rank }) {
+/**
+ * viewMode: 'flatlay' | 'model'
+ *  - flatlay: show image[0] (flatlay), hover → image[3] (front-side model)
+ *  - model:   show image[3] (front-side model), hover → image[2] (back model)
+ */
+export default function BraCard({ entry, rank, viewMode = 'flatlay' }) {
   const fittingSections = parseFittingNotes(entry.fitting_notes);
   const [imgError, setImgError] = useState(false);
+  const [hoverImgError, setHoverImgError] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const images = (imageManifest[entry.style] || []).slice(0, 7);
-  const primaryImage = images[0];
+
+  // Primary and hover indices based on viewMode
+  const primaryIdx = viewMode === 'model' ? 3 : 0;
+  const hoverIdx = viewMode === 'model' ? 2 : 3;
+
+  const primaryImage = images[primaryIdx] || images[0];
+  const hoverImage = images[hoverIdx];
+
   const heroUrl = S3_BASE && primaryImage && !imgError
     ? `${S3_BASE}/${primaryImage}`
     : null;
+
+  const hoverUrl = S3_BASE && hoverImage && !hoverImgError
+    ? `${S3_BASE}/${hoverImage}`
+    : null;
+
+  const displayUrl = isHovered && hoverUrl ? hoverUrl : heroUrl;
 
   const openLightbox = (index = 0) => {
     if (images.length === 0) return;
@@ -49,13 +69,22 @@ export default function BraCard({ entry, rank }) {
       <div className="bra-card">
         <div className="card-rank">#{rank}</div>
 
-        {heroUrl ? (
-          <div className="card-image-wrap" onClick={() => openLightbox(0)} title="Click to view all images">
+        {displayUrl ? (
+          <div
+            className="card-image-wrap"
+            onClick={() => openLightbox(0)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            title="Click to view all images"
+          >
             <img
               className="card-image"
-              src={heroUrl}
+              src={displayUrl}
               alt={`${entry.style_name} – Style ${entry.style}`}
-              onError={() => setImgError(true)}
+              onError={() => {
+                if (isHovered) setHoverImgError(true);
+                else setImgError(true);
+              }}
             />
             {images.length > 1 && (
               <span className="card-image-count">+{images.length - 1} photos</span>
@@ -84,6 +113,12 @@ export default function BraCard({ entry, rank }) {
               </div>
             </details>
           )}
+
+          <div className="card-actions">
+            <button className="card-action-btn card-action-btn--wishlist" onClick={(e) => e.stopPropagation()}>
+              ♡ Save to Wishlist
+            </button>
+          </div>
         </div>
       </div>
 
